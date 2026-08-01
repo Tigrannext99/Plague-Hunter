@@ -21,6 +21,12 @@ namespace PlagueHunter.Player
 
         [Header("Combat")]
         public LayerMask enemyLayers;
-        public ComboData combo;
+        public ComboData[] combos;
+
+        public ComboData GetRandomCombo()
+        {
+            if (combos == null || combos.Length == 0) return null;
+            return combos[Random.Range(0, combos.Length)];
+        }
     }
 }

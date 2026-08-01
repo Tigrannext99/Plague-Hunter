@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4acff5cf9450d42eab2040a16a392d4d, type: 3}
-  m_Name: ComboData
+  m_Name: Combo3
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.ComboData
   attacks:
-  - {fileID: 11400000, guid: a844a28e375a843908928ef8c9e49e35, type: 2}
-  - {fileID: 11400000, guid: 19e1edf2b89754641a9b633c0fe2de1a, type: 2}
-  - {fileID: 11400000, guid: 1c4038c86ac3a4a7593d16042beacff6, type: 2}
+  - {fileID: 11400000, guid: 0f4049959fbed4390a4461ee302a746c, type: 2}
+  - {fileID: 11400000, guid: 14430eeae24f14b37940606f57306a80, type: 2}

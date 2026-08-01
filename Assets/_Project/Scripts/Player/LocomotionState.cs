@@ -21,10 +21,14 @@ namespace PlagueHunter.Player
 
         public void Tick(float deltaTime)
         {
-            if (_ctx.Input.AttackPressed && _ctx.Config.combo != null)
+            if (_ctx.Input.AttackPressed)
             {
-                _ctx.StateMachine.SetState(new AttackState(_ctx, _ctx.Config.combo, 0));
-                return;
+                var combo = _ctx.Config.GetRandomCombo();
+                if (combo != null)
+                {
+                    _ctx.StateMachine.SetState(new AttackState(_ctx, combo, 0));
+                    return;
+                }
             }
 
             var cfg = _ctx.Config;

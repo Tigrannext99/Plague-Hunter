@@ -22,4 +22,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8
-  combo: {fileID: 11400000, guid: 3aa16cf0716ac441dab591ce12b8545a, type: 2}
+  combos:
+  - {fileID: 11400000, guid: 3aa16cf0716ac441dab591ce12b8545a, type: 2}
+  - {fileID: 11400000, guid: 20309aede99064db0a7d008623e8b816, type: 2}
+  - {fileID: 11400000, guid: 82704fe091ec34b12954337607f70def, type: 2}
