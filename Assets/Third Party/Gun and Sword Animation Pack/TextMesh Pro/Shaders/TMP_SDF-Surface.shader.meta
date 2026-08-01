@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f7ada0af4f174f0694ca6a487b8f543d
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 368712
+  packageName: Gun & Sword Animation Pack
+  packageVersion: 1.1
+  assetPath: Assets/Gun and Sword Animation Pack/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+  uploadId: 960742

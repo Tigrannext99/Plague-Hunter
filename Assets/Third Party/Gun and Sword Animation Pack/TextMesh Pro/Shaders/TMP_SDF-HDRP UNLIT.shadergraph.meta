@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f63d574838ccfb44f84acc05fed0af48
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 368712
+  packageName: Gun & Sword Animation Pack
+  packageVersion: 1.1
+  assetPath: Assets/Gun and Sword Animation Pack/TextMesh Pro/Shaders/TMP_SDF-HDRP
+    UNLIT.shadergraph
+  uploadId: 960742

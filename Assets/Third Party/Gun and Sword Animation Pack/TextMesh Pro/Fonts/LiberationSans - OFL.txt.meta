@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6e59c59b81ab47f9b6ec5781fa725d2c
+timeCreated: 1484171296
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 368712
+  packageName: Gun & Sword Animation Pack
+  packageVersion: 1.1
+  assetPath: Assets/Gun and Sword Animation Pack/TextMesh Pro/Fonts/LiberationSans
+    - OFL.txt
+  uploadId: 960742

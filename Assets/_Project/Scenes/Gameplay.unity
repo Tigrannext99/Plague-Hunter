@@ -3134,6 +3134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1476621011378322556}
   - component: {fileID: 2558834379278014536}
+  - component: {fileID: 2558834379278014538}
+  - component: {fileID: 2558834379278014537}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -3645,7 +3647,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2248934830410917574}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8ebce5baac0b2404b8b148cc7ae805e3, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c038c81b1d944eb4792ea0713d81f201, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -3658,6 +3660,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2558834379278014537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248934830410917574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec83735b32f2e7749b881877df0e388f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Player.PlayerController
+  config: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!143 &2558834379278014538
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248934830410917574}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!4 &2581041323796870152
 Transform:
   m_ObjectHideFlags: 0
