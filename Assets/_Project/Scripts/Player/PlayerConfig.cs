@@ -23,6 +23,10 @@ namespace PlagueHunter.Player
         public LayerMask enemyLayers;
         public ComboData[] combos;
 
+        [Header("Attack")]
+        public float attackTurnDuration = 0.15f;
+        public float attackTurnSpeed = 720f;
+
         public ComboData GetRandomCombo()
         {
             if (combos == null || combos.Length == 0) return null;

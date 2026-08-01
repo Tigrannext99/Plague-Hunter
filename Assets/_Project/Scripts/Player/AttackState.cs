@@ -43,6 +43,8 @@ namespace PlagueHunter.Player
 
         public void Tick(float deltaTime)
         {
+            ApplyTurn(deltaTime);
+            
             _timer += deltaTime;
 
             if (_ctx.Input.AttackPressed && _timer >= _attack.comboStart - InputBuffer)
@@ -72,6 +74,40 @@ namespace PlagueHunter.Player
 
             _ctx.StateMachine.SetState(new AttackState(_ctx, _combo, _index + 1));
             return true;
+        }
+
+        private Vector3 CameraRelative(Vector2 input)
+        {
+            Transform cam = _ctx.CameraTransform;
+
+            Vector3 forward = cam.forward;
+            Vector3 right = cam.right;
+
+            forward.y = 0f;
+            right.y = 0f;
+
+            forward.Normalize();
+            right.Normalize();
+
+            return forward * input.y + right * input.x;
+        }
+
+        private void ApplyTurn(float deltaTime)
+        {
+            if (_timer > _ctx.Config.attackTurnDuration) return;
+
+            Vector2 raw = Vector2.ClampMagnitude(_ctx.Input.Move, 1f);
+            if (raw.sqrMagnitude < 0.01f) return;
+
+            Vector3 dir = CameraRelative(raw.normalized);
+            if (dir.sqrMagnitude < 0.0001f) return;
+
+            Quaternion target = Quaternion.LookRotation(dir, Vector3.up);
+
+            _ctx.Transform.rotation = Quaternion.RotateTowards(
+                _ctx.Transform.rotation,
+                target,
+                _ctx.Config.attackTurnSpeed * deltaTime);
         }
 
         private void DealDamage()
