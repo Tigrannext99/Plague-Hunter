@@ -15,8 +15,8 @@ MonoBehaviour:
   animationStateName: Attack3
   crossFadeDuration: 0.1
   duration: 2.717
-  hitStart: 0.3
-  hitEnd: 0.45
+  hitStart: 0.34
+  hitEnd: 1.2
   comboStart: 0.45
   comboEnd: 0.8
   hitboxOffset: {x: 0, y: 1, z: 1}
