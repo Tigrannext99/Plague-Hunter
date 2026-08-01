@@ -9,25 +9,40 @@ namespace PlagueHunter.Player
         [SerializeField] private PlayerConfig config;
         [SerializeField] private Animator animator;
 
+        private CharacterController _controller;
         private StateMachine _fsm;
         private PlayerContext _ctx;
         private PlayerInputReader _input;
 
+        public bool UseRootMotion { get; set; }
+
         private void Awake()
         {
+            _controller = GetComponent<CharacterController>();
             _input = new PlayerInputReader();
             _fsm = new StateMachine();
 
             _ctx = new PlayerContext(
                 transform,
-                GetComponent<CharacterController>(),
+                _controller,
                 animator,
                 _input,
                 config,
                 Camera.main.transform,
-                _fsm);
+                _fsm,
+                this);
 
             _fsm.SetState(new LocomotionState(_ctx));
+        }
+
+        private void Update() => _fsm.Tick(Time.deltaTime);
+
+        private void OnDestroy() => _input.Dispose();
+
+        private void OnAnimatorMove()
+        {
+            if (!UseRootMotion) return;
+            _controller.Move(animator.deltaPosition);
         }
 
         private void OnDrawGizmosSelected()
@@ -43,9 +58,5 @@ namespace PlagueHunter.Player
                 Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, attack.hitboxSize);
         }
-
-        private void Update() => _fsm.Tick(Time.deltaTime);
-
-        private void OnDestroy() => _input.Dispose();
     }
 }

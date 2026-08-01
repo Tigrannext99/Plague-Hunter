@@ -24,10 +24,14 @@ namespace PlagueHunter.Player
             _hitDone = false;
 
             _ctx.CurrentSpeed = 0f;
+            _ctx.PlayerController.UseRootMotion = true;
             _ctx.Animator.CrossFadeInFixedTime(_attack.animationStateName, _attack.crossFadeDuration);
         }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            _ctx.PlayerController.UseRootMotion = false;
+        }
 
         public void Tick(float deltaTime)
         {

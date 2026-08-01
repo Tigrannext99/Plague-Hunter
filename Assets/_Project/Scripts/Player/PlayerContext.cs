@@ -12,6 +12,7 @@ namespace PlagueHunter.Player
         public readonly PlayerConfig Config;
         public readonly Transform CameraTransform;
         public readonly StateMachine StateMachine;
+        public readonly PlayerController PlayerController;
 
         public float CurrentSpeed;
         public float VerticalVelocity;
@@ -23,7 +24,8 @@ namespace PlagueHunter.Player
             PlayerInputReader input,
             PlayerConfig config,
             Transform cameraTransform,
-            StateMachine stateMachine)
+            StateMachine stateMachine,
+            PlayerController playerController)
         {
             Transform = transform;
             Controller = controller;
@@ -32,6 +34,7 @@ namespace PlagueHunter.Player
             Config = config;
             CameraTransform = cameraTransform;
             StateMachine = stateMachine;
+            PlayerController = playerController;
         }
     }
 }
