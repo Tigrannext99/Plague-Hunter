@@ -6,16 +6,26 @@ namespace PlagueHunter.Player
     public class LocomotionState : IState
     {
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
+        private const string LocomotionStateName = "Locomotion";
 
         private readonly PlayerContext _ctx;
 
         public LocomotionState(PlayerContext ctx) => _ctx = ctx;
 
-        public void Enter() { }
+        public void Enter()
+        {
+            _ctx.Animator.CrossFadeInFixedTime(LocomotionStateName, 0.15f);
+        }
+        
         public void Exit() { }
 
         public void Tick(float deltaTime)
         {
+            if (_ctx.Input.AttackPressed)
+{
+            _ctx.StateMachine.SetState(new AttackState(_ctx, _ctx.Config.attack1));
+            return;
+}
             var cfg = _ctx.Config;
 
             Vector2 raw = Vector2.ClampMagnitude(_ctx.Input.Move, 1f);

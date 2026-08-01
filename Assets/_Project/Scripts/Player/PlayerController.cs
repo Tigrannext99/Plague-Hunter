@@ -30,6 +30,20 @@ namespace PlagueHunter.Player
             _fsm.SetState(new LocomotionState(_ctx));
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            if (config == null || config.attack1 == null) return;
+
+            var attack = config.attack1;
+
+            Gizmos.color = Color.red;
+            Gizmos.matrix = Matrix4x4.TRS(
+                transform.TransformPoint(attack.hitboxOffset),
+                transform.rotation,
+                Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, attack.hitboxSize);
+        }
+
         private void Update() => _fsm.Tick(Time.deltaTime);
 
         private void OnDestroy() => _input.Dispose();

@@ -9,6 +9,7 @@ namespace PlagueHunter.Player
 
         public Vector2 Move => _controls.Player.Move.ReadValue<Vector2>();
         public bool RunHeld => _controls.Player.Run.IsPressed();
+        public bool AttackPressed => _controls.Player.Attack.WasPerformedThisFrame();
 
         public PlayerInputReader()
         {

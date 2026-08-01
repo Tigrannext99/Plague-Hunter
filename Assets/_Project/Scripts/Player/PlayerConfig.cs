@@ -1,4 +1,5 @@
 using UnityEngine;
+using PlagueHunter.Combat;
 
 namespace PlagueHunter.Player
 {
@@ -17,5 +18,9 @@ namespace PlagueHunter.Player
 
         [Header("Animation")]
         public float animDampTime = 0.1f;
+
+        [Header("Combat")]
+        public LayerMask enemyLayers;
+        public AttackData attack1;
     }
 }

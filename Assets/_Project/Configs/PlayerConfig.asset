@@ -19,3 +19,7 @@ MonoBehaviour:
   gravity: -25
   groundedStick: -2
   animDampTime: 0.1
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  attack1: {fileID: 11400000, guid: a844a28e375a843908928ef8c9e49e35, type: 2}
