@@ -44,7 +44,7 @@ namespace PlagueHunter.Player
         public void Tick(float deltaTime)
         {
             ApplyTurn(deltaTime);
-            
+
             _timer += deltaTime;
 
             if (_ctx.Input.AttackPressed && _timer >= _attack.comboStart - InputBuffer)
@@ -120,11 +120,19 @@ namespace PlagueHunter.Player
                 _ctx.Transform.rotation,
                 _ctx.Config.enemyLayers);
 
+            bool hitAnything = false;
+
             for (int i = 0; i < hits.Length; i++)
             {
                 if (hits[i].TryGetComponent(out IDamageable damageable))
+                {
                     damageable.TakeDamage(_attack.damage);
+                    hitAnything = true;
+                }
             }
+
+            if (hitAnything)
+                _ctx.HitStop.Play();
         }
 
         private void ApplyGravity(float deltaTime)

@@ -939,6 +939,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hunter
       objectReference: {fileID: 0}
+    - target: {fileID: 7488401996985995203, guid: 2ed2c8bde56764dd0a3fd3b0d93b6340, type: 3}
+      propertyPath: scale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488401996985995203, guid: 2ed2c8bde56764dd0a3fd3b0d93b6340, type: 3}
+      propertyPath: duration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7786200475529145381, guid: 2ed2c8bde56764dd0a3fd3b0d93b6340, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -992,6 +1000,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1832177652938564421, guid: 15c011e6d860f44cb976fdf279493d13, type: 3}
+      propertyPath: maxHealth
+      value: 100000
+      objectReference: {fileID: 0}
     - target: {fileID: 4999713965721201711, guid: 15c011e6d860f44cb976fdf279493d13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.18442877

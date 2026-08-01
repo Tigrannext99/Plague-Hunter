@@ -1,9 +1,11 @@
+using PlagueHunter.Combat;
 using PlagueHunter.Core;
 using UnityEngine;
 
 namespace PlagueHunter.Player
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(HitStop))]
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerConfig config;
@@ -13,12 +15,14 @@ namespace PlagueHunter.Player
         private StateMachine _fsm;
         private PlayerContext _ctx;
         private PlayerInputReader _input;
+        private HitStop _hitStop;
 
         public bool UseRootMotion { get; set; }
 
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            _hitStop = GetComponent<HitStop>();
             _input = new PlayerInputReader();
             _fsm = new StateMachine();
 
@@ -30,7 +34,8 @@ namespace PlagueHunter.Player
                 config,
                 Camera.main.transform,
                 _fsm,
-                this);
+                this,
+                _hitStop);
 
             _fsm.SetState(new LocomotionState(_ctx));
         }

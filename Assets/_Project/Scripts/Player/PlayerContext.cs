@@ -1,3 +1,4 @@
+using PlagueHunter.Combat;
 using PlagueHunter.Core;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace PlagueHunter.Player
         public readonly Transform CameraTransform;
         public readonly StateMachine StateMachine;
         public readonly PlayerController PlayerController;
+        public readonly HitStop HitStop;
 
         public float CurrentSpeed;
         public float VerticalVelocity;
@@ -25,7 +27,8 @@ namespace PlagueHunter.Player
             PlayerConfig config,
             Transform cameraTransform,
             StateMachine stateMachine,
-            PlayerController playerController)
+            PlayerController playerController,
+            HitStop hitStop)
         {
             Transform = transform;
             Controller = controller;
@@ -35,6 +38,7 @@ namespace PlagueHunter.Player
             CameraTransform = cameraTransform;
             StateMachine = stateMachine;
             PlayerController = playerController;
+            HitStop = hitStop;
         }
     }
 }
