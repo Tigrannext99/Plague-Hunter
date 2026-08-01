@@ -47,9 +47,10 @@ namespace PlagueHunter.Player
 
         private void OnDrawGizmosSelected()
         {
-            if (config == null || config.attack1 == null) return;
+            if (config == null || config.combo == null) return;
 
-            var attack = config.attack1;
+            var attack = config.combo.Get(0);
+            if (attack == null) return;
 
             Gizmos.color = Color.red;
             Gizmos.matrix = Matrix4x4.TRS(

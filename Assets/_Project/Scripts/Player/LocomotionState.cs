@@ -5,8 +5,8 @@ namespace PlagueHunter.Player
 {
     public class LocomotionState : IState
     {
+        private const string StateName = "Locomotion";
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
-        private const string LocomotionStateName = "Locomotion";
 
         private readonly PlayerContext _ctx;
 
@@ -14,21 +14,25 @@ namespace PlagueHunter.Player
 
         public void Enter()
         {
-            _ctx.Animator.CrossFadeInFixedTime(LocomotionStateName, 0.15f);
+            _ctx.Animator.CrossFadeInFixedTime(StateName, 0.15f);
         }
-        
+
         public void Exit() { }
 
         public void Tick(float deltaTime)
         {
-            if (_ctx.Input.AttackPressed)
-{
-            _ctx.StateMachine.SetState(new AttackState(_ctx, _ctx.Config.attack1));
-            return;
-}
+            if (_ctx.Input.AttackPressed && _ctx.Config.combo != null)
+            {
+                _ctx.StateMachine.SetState(new AttackState(_ctx, _ctx.Config.combo, 0));
+                return;
+            }
+
             var cfg = _ctx.Config;
 
             Vector2 raw = Vector2.ClampMagnitude(_ctx.Input.Move, 1f);
+            if (raw.sqrMagnitude > 0.01f)
+                raw = raw.normalized;
+
             Vector3 dir = CameraRelative(raw);
 
             float maxSpeed = _ctx.Input.RunHeld ? cfg.runSpeed : cfg.walkSpeed;

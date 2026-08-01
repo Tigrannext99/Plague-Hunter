@@ -14,6 +14,10 @@ namespace PlagueHunter.Combat
         public float hitStart = 0.3f;
         public float hitEnd = 0.45f;
 
+        [Header("Combo window, seconds")]
+        public float comboStart = 0.45f;
+        public float comboEnd = 0.8f;
+
         [Header("Hitbox")]
         public Vector3 hitboxOffset = new Vector3(0f, 1f, 1f);
         public Vector3 hitboxSize = new Vector3(1f, 1f, 1.5f);

@@ -6,22 +6,30 @@ namespace PlagueHunter.Player
 {
     public class AttackState : IState
     {
+        private const float InputBuffer = 0.2f;
+
         private readonly PlayerContext _ctx;
+        private readonly ComboData _combo;
+        private readonly int _index;
         private readonly AttackData _attack;
 
         private float _timer;
         private bool _hitDone;
+        private bool _buffered;
 
-        public AttackState(PlayerContext ctx, AttackData attack)
+        public AttackState(PlayerContext ctx, ComboData combo, int index)
         {
             _ctx = ctx;
-            _attack = attack;
+            _combo = combo;
+            _index = index;
+            _attack = combo.Get(index);
         }
 
         public void Enter()
         {
             _timer = 0f;
             _hitDone = false;
+            _buffered = false;
 
             _ctx.CurrentSpeed = 0f;
             _ctx.PlayerController.UseRootMotion = true;
@@ -37,17 +45,33 @@ namespace PlagueHunter.Player
         {
             _timer += deltaTime;
 
+            if (_ctx.Input.AttackPressed && _timer >= _attack.comboStart - InputBuffer)
+                _buffered = true;
+
             if (!_hitDone && _timer >= _attack.hitStart && _timer <= _attack.hitEnd)
             {
                 DealDamage();
                 _hitDone = true;
             }
 
+            if (TryAdvance()) return;
+
             ApplyGravity(deltaTime);
             _ctx.Controller.Move(Vector3.up * _ctx.VerticalVelocity * deltaTime);
 
             if (_timer >= _attack.duration)
                 _ctx.StateMachine.SetState(new LocomotionState(_ctx));
+        }
+
+        private bool TryAdvance()
+        {
+            if (!_buffered) return false;
+            if (!_combo.HasNext(_index)) return false;
+            if (_timer < _attack.comboStart) return false;
+            if (_timer > _attack.comboEnd) return false;
+
+            _ctx.StateMachine.SetState(new AttackState(_ctx, _combo, _index + 1));
+            return true;
         }
 
         private void DealDamage()

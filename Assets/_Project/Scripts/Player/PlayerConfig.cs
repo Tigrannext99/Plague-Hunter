@@ -1,5 +1,5 @@
-using UnityEngine;
 using PlagueHunter.Combat;
+using UnityEngine;
 
 namespace PlagueHunter.Player
 {
@@ -21,6 +21,6 @@ namespace PlagueHunter.Player
 
         [Header("Combat")]
         public LayerMask enemyLayers;
-        public AttackData attack1;
+        public ComboData combo;
     }
 }
