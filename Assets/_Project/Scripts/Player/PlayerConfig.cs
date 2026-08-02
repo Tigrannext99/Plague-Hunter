@@ -27,6 +27,11 @@ namespace PlagueHunter.Player
         public float attackTurnDuration = 0.15f;
         public float attackTurnSpeed = 720f;
 
+        [Header("Lock-On")]
+        public float lockOnRadius = 12f;
+        public float lockOnMaxAngle = 60f;
+        public float lockOnBreakDistance = 16f;
+
         public ComboData GetRandomCombo()
         {
             if (combos == null || combos.Length == 0) return null;

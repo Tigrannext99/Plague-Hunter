@@ -6,6 +6,7 @@ namespace PlagueHunter.Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(HitStop))]
+    [RequireComponent(typeof(TargetLock))]
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerConfig config;
@@ -16,6 +17,7 @@ namespace PlagueHunter.Player
         private PlayerContext _ctx;
         private PlayerInputReader _input;
         private HitStop _hitStop;
+        private TargetLock _targetLock;
 
         public bool UseRootMotion { get; set; }
 
@@ -23,8 +25,11 @@ namespace PlagueHunter.Player
         {
             _controller = GetComponent<CharacterController>();
             _hitStop = GetComponent<HitStop>();
+            _targetLock = GetComponent<TargetLock>();
             _input = new PlayerInputReader();
             _fsm = new StateMachine();
+
+            _targetLock.Init(config, Camera.main.transform);
 
             _ctx = new PlayerContext(
                 transform,
@@ -40,7 +45,13 @@ namespace PlagueHunter.Player
             _fsm.SetState(new LocomotionState(_ctx));
         }
 
-        private void Update() => _fsm.Tick(Time.deltaTime);
+        private void Update()
+        {
+            if (_input.LockOnPressed)
+                _targetLock.Toggle();
+
+            _fsm.Tick(Time.deltaTime);
+        }
 
         private void OnDestroy() => _input.Dispose();
 
