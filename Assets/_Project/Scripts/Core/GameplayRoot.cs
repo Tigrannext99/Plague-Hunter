@@ -25,14 +25,7 @@ namespace PlagueHunter.Core
             _input.DodgePressed -= OnDodgePressed;
             _input.LockOnPressed -= OnLockOnPressed;
         }
-
-        private void Update()
-        {
-            if (_input == null) return;
-            if (_input.Move.sqrMagnitude > 0.01f) Debug.Log($"Move {_input.Move}");
-            if (_input.Look.sqrMagnitude > 0.01f) Debug.Log($"Look {_input.Look}");
-        }
-
+        
         private void OnAttackPressed() => Debug.Log("Attack");
         private void OnDodgePressed() => Debug.Log("Dodge");
         private void OnLockOnPressed() => Debug.Log("LockOn");
