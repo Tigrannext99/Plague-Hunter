@@ -5,7 +5,10 @@ namespace PlagueHunter.Player
 {
     public sealed class PlayerRoot : MonoBehaviour
     {
+        private static readonly int SpeedHash = Animator.StringToHash("Speed");
+
         [SerializeField] private CharacterController _controller;
+        [SerializeField] private Animator _animator;
         [SerializeField] private PlayerConfig _config;
 
         private GameplayInputReader _input;
@@ -22,6 +25,7 @@ namespace PlagueHunter.Player
             if (_locomotion == null) return;
 
             _locomotion.Tick(_input.Move, Time.deltaTime);
+            _animator.SetFloat(SpeedHash, _locomotion.CurrentSpeed, Time.deltaTime, 0.1f);
         }
     }
 }
