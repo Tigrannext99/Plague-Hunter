@@ -285,7 +285,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Dualsense"",
                     ""id"": ""079f4c6c-ea8d-4a5d-aebe-3568b65884c5"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -329,7 +329,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""4acb1af4-4faa-42e9-be35-9e149a2aaefc"",
-                    ""path"": ""<DualSenseGampadiOS>/leftStick/right"",
+                    ""path"": ""<DualSenseGamepadHID>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

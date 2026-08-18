@@ -7134,6 +7134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Player.PlayerRoot
   _controller: {fileID: 7286719607539024327}
+  _animator: {fileID: 6168016619778918554}
   _config: {fileID: 11400000, guid: cd9218d11bc504e809bf4e770473d47f, type: 2}
 --- !u!1 &6049789307486983038
 GameObject:
