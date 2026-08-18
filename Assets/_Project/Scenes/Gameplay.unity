@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d455ec606eeb24ed7973bbffcf7945d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Core.GameplayRoot
-  _player: {fileID: 1924267411}
+  _player: {fileID: 8554954065731016462}
 --- !u!1 &1119959162
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1924267414}
+    TrackingTarget: {fileID: 2331001695126130039}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -734,28 +734,12 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &1924267411 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8767411986353753969, guid: eccae959ace8742b69069f7636e7528e, type: 3}
-  m_PrefabInstance: {fileID: 3682550662153363773}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62fc75974c6904cad9dea7d58b1324bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Player.PlayerRoot
---- !u!95 &1924267413 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6168016619778918554, guid: eccae959ace8742b69069f7636e7528e, type: 3}
-  m_PrefabInstance: {fileID: 3682550662153363773}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1924267414 stripped
+--- !u!4 &2331001695126130039 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
-  m_PrefabInstance: {fileID: 3682550662153363773}
+  m_CorrespondingSourceObject: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+  m_PrefabInstance: {fileID: 7097522888225811069}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3682550662153363773
+--- !u!1001 &7097522888225811069
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -763,59 +747,70 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6017727861121211004, guid: eccae959ace8742b69069f7636e7528e, type: 3}
-      propertyPath: m_Name
-      value: Player
+    - target: {fileID: 1504129438315215424, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6200093307986454006, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+    - target: {fileID: 5237115950318999263, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8767411986353753969, guid: eccae959ace8742b69069f7636e7528e, type: 3}
-      propertyPath: _animator
-      value: 
-      objectReference: {fileID: 1924267413}
+    - target: {fileID: 5785940478783447210, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+      propertyPath: m_Name
+      value: Player_Dummy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: eccae959ace8742b69069f7636e7528e, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+--- !u!114 &8554954065731016462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5250643533111575896, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+  m_PrefabInstance: {fileID: 7097522888225811069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62fc75974c6904cad9dea7d58b1324bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Player.PlayerRoot
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -823,5 +818,5 @@ SceneRoots:
   - {fileID: 768838104}
   - {fileID: 799449497}
   - {fileID: 1383016560}
-  - {fileID: 3682550662153363773}
   - {fileID: 1119959163}
+  - {fileID: 7097522888225811069}
