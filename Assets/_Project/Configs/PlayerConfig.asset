@@ -17,3 +17,4 @@ MonoBehaviour:
   _speedSharpness: 12
   _rotationSharpness: 14
   _groundedGravity: -2
+  _attackDuration: 1.4
