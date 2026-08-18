@@ -16,10 +16,14 @@ namespace PlagueHunter.Player
         [Header("Gravity")]
         [SerializeField] private float _groundedGravity = -2f;
 
+        [Header("Combat")]
+        [SerializeField] private float _attackDuration = 0.8f;
+
         public float WalkSpeed => _walkSpeed;
         public float RunSpeed => _runSpeed;
         public float SpeedSharpness => _speedSharpness;
         public float RotationSharpness => _rotationSharpness;
         public float GroundedGravity => _groundedGravity;
+        public float AttackDuration => _attackDuration;
     }
 }

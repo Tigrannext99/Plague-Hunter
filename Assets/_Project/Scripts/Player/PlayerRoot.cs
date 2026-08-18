@@ -5,27 +5,40 @@ namespace PlagueHunter.Player
 {
     public sealed class PlayerRoot : MonoBehaviour
     {
-        private static readonly int SpeedHash = Animator.StringToHash("Speed");
+        public static readonly int SpeedHash = Animator.StringToHash("Speed");
+        public static readonly int AttackHash = Animator.StringToHash("Attack");
 
         [SerializeField] private CharacterController _controller;
         [SerializeField] private Animator _animator;
         [SerializeField] private PlayerConfig _config;
 
-        private GameplayInputReader _input;
-        private PlayerLocomotion _locomotion;
+        private readonly StateMachine _machine = new StateMachine();
+
+        public GameplayInputReader Input { get; private set; }
+        public PlayerLocomotion Locomotion { get; private set; }
+        public Animator Animator => _animator;
+        public PlayerConfig Config => _config;
+        public StateMachine Machine => _machine;
+
+        public IdleState Idle { get; private set; }
+        public MoveState Move { get; private set; }
+        public AttackState Attack { get; private set; }
 
         public void Compose(GameplayInputReader input, Transform cameraTransform)
         {
-            _input = input;
-            _locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
+            Input = input;
+            Locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
+
+            Idle = new IdleState(this);
+            Move = new MoveState(this);
+            Attack = new AttackState(this);
+
+            _machine.SetState(Idle);
         }
 
         private void Update()
         {
-            if (_locomotion == null) return;
-
-            _locomotion.Tick(_input.Move, Time.deltaTime);
-            _animator.SetFloat(SpeedHash, _locomotion.CurrentSpeed, Time.deltaTime, 0.1f);
+            _machine.Tick(Time.deltaTime);
         }
     }
 }
