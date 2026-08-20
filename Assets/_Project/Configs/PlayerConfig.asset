@@ -18,3 +18,10 @@ MonoBehaviour:
   _rotationSharpness: 14
   _groundedGravity: -2
   _attackDuration: 1.4
+  _attackDamage: 25
+  _hitStart: 0
+  _hitEnd: 0.7
+  _hitBoxHalfExtents: {x: 0.15, y: 0.15, z: 0.5}
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
