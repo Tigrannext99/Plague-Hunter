@@ -16,8 +16,13 @@ namespace PlagueHunter.Player
         [Header("Gravity")]
         [SerializeField] private float _groundedGravity = -2f;
 
-        [Header("Combat")]
-        [SerializeField] private float _attackDuration = 0.8f;
+        [Header("Attack")]
+        [SerializeField] private float _attackDuration = 1.633f;
+        [SerializeField] private float _attackDamage = 25f;
+        [SerializeField] private float _hitStart = 0.35f;
+        [SerializeField] private float _hitEnd = 0.7f;
+        [SerializeField] private Vector3 _hitBoxHalfExtents = new Vector3(0.15f, 0.15f, 0.5f);
+        [SerializeField] private LayerMask _enemyMask;
 
         public float WalkSpeed => _walkSpeed;
         public float RunSpeed => _runSpeed;
@@ -25,5 +30,16 @@ namespace PlagueHunter.Player
         public float RotationSharpness => _rotationSharpness;
         public float GroundedGravity => _groundedGravity;
         public float AttackDuration => _attackDuration;
+        public float AttackDamage => _attackDamage;
+        public float HitStart => _hitStart;
+        public float HitEnd => _hitEnd;
+        public Vector3 HitBoxHalfExtents => _hitBoxHalfExtents;
+        public LayerMask EnemyMask => _enemyMask;
+
+        private void OnValidate()
+        {
+            _hitStart = Mathf.Clamp(_hitStart, 0f, _attackDuration);
+            _hitEnd = Mathf.Clamp(_hitEnd, _hitStart, _attackDuration);
+        }
     }
 }

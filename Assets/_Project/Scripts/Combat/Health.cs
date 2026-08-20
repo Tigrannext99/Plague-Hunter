@@ -32,12 +32,15 @@ namespace PlagueHunter.Combat
         {
             _current = _maxHealth;
             _block = new MaterialPropertyBlock();
+            
 
             if (_renderer == null)
                 _renderer = GetComponentInChildren<Renderer>();
 
             if (_renderer != null)
                 _baseColor = _renderer.sharedMaterial.GetColor(BaseColorId);
+
+            Debug.Log(_renderer.sharedMaterial.shader.name);
         }
 
         public void TakeDamage(float amount)
@@ -56,6 +59,8 @@ namespace PlagueHunter.Combat
 
             _flashTimer = _flashDuration;
             SetColor(_flashColor);
+
+            Debug.Log($"hit {name} {_current}");
         }
 
         void Update()

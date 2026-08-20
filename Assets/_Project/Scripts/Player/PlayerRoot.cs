@@ -11,6 +11,7 @@ namespace PlagueHunter.Player
         [SerializeField] private CharacterController _controller;
         [SerializeField] private Animator _animator;
         [SerializeField] private PlayerConfig _config;
+        [SerializeField] private Transform _hitPoint;
 
         private readonly StateMachine _machine = new StateMachine();
 
@@ -23,6 +24,8 @@ namespace PlagueHunter.Player
         public IdleState Idle { get; private set; }
         public MoveState Move { get; private set; }
         public AttackState Attack { get; private set; }
+
+        public Transform HitPoint => _hitPoint;
 
         public void Compose(GameplayInputReader input, Transform cameraTransform)
         {
@@ -39,6 +42,15 @@ namespace PlagueHunter.Player
         private void Update()
         {
             _machine.Tick(Time.deltaTime);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (_config == null || _hitPoint == null) return;
+
+            Gizmos.color = Color.red;
+            Gizmos.matrix = Matrix4x4.TRS(_hitPoint.position, _hitPoint.rotation, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, _config.HitBoxHalfExtents * 2f);
         }
     }
 }
