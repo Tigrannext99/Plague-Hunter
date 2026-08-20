@@ -1027,6 +1027,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5250643533111575896, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
+      propertyPath: _combo
+      value: 
+      objectReference: {fileID: 11400000, guid: db5103ce8c5514c8480118800095377f, type: 2}
+    - target: {fileID: 5250643533111575896, guid: 5e7a2a42c096f8747ab5f81e7bc79e7b, type: 3}
       propertyPath: _hitPoint
       value: 
       objectReference: {fileID: 542981565}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a89ddfdb685c64d12a8952c2359887c5, type: 3}
+  m_Name: Combo_1
+  m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.ComboData
+  _attacks:
+  - {fileID: 11400000, guid: 3812dd73e4add481f9838927c96280d4, type: 2}
+  - {fileID: 11400000, guid: f9efe8b5f7460490885492e71d167fe8, type: 2}
+  - {fileID: 11400000, guid: 41a788bc5c53043c8a767dfce086e48d, type: 2}
+  - {fileID: 11400000, guid: b892c5acc91344eba802534328544e65, type: 2}

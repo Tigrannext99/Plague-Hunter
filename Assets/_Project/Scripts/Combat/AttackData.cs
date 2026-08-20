@@ -5,7 +5,7 @@ namespace PlagueHunter.Combat
     [CreateAssetMenu(menuName = "PlagueHunter/Attack Data")]
     public sealed class AttackData : ScriptableObject
     {
-        [SerializeField] private string _stateName = "Attack1";
+        [SerializeField] private string _stateName = "Attack_1";
         [SerializeField] private float _duration = 1f;
 
         [Header("Hit window (seconds)")]
@@ -17,10 +17,12 @@ namespace PlagueHunter.Combat
         [SerializeField] private float _comboEnd = 0.8f;
 
         [Header("Damage")]
-        [SerializeField] private float _damage = 10f;
-        [SerializeField] private Vector3 _hitBoxHalfExtents = new Vector3(0.6f, 0.5f, 0.9f);
+        [SerializeField] private float _damage = 25f;
+        [SerializeField] private Vector3 _hitBoxHalfExtents = new Vector3(0.15f, 0.15f, 0.5f);
 
         private int _stateHash = -1;
+
+        public string StateName => _stateName;
 
         public int StateHash
         {
@@ -44,9 +46,9 @@ namespace PlagueHunter.Combat
             _stateHash = -1;
 
             _hitEnd = Mathf.Max(_hitEnd, _hitStart);
-            _comboStart = Mathf.Max(_comboStart, _hitEnd);
             _comboEnd = Mathf.Max(_comboEnd, _comboStart);
             _duration = Mathf.Max(_duration, _comboEnd);
+            _duration = Mathf.Max(_duration, _hitEnd);
         }
     }
 }

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff95196375c5848d88a044cbf390bb34, type: 3}
   m_Name: Attack_3
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.AttackData
-  _stateName: Attack_2
-  _duration: 1
-  _hitStart: 0.25
-  _hitEnd: 0.35
-  _comboStart: 0.4
-  _comboEnd: 0.8
+  _stateName: Attack_3
+  _duration: 1.867
+  _hitStart: 0
+  _hitEnd: 1
+  _comboStart: 0.3
+  _comboEnd: 1
   _damage: 10
   _hitBoxHalfExtents: {x: 0.6, y: 0.5, z: 0.9}

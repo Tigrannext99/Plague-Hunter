@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Attack_4
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.AttackData
   _stateName: Attack_4
-  _duration: 1
+  _duration: 1.9
   _hitStart: 0.25
   _hitEnd: 0.35
-  _comboStart: 0.4
-  _comboEnd: 0.8
+  _comboStart: 0
+  _comboEnd: 0
   _damage: 10
   _hitBoxHalfExtents: {x: 0.6, y: 0.5, z: 0.9}

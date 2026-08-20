@@ -69,5 +69,7 @@ namespace PlagueHunter.Player
 
             _transform.rotation = Quaternion.Slerp(_transform.rotation, target, factor);
         }
+
+        public void Reset() => _currentVelocity = Vector3.zero;
     }
 }

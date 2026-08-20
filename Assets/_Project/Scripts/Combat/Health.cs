@@ -59,8 +59,6 @@ namespace PlagueHunter.Combat
 
             _flashTimer = _flashDuration;
             SetColor(_flashColor);
-
-            Debug.Log($"hit {name} {_current}");
         }
 
         void Update()
