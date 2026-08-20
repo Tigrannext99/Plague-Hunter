@@ -21,6 +21,7 @@ namespace PlagueHunter.Player
 
             _timer = 0f;
             _alreadyHit.Clear();
+            _player.UseRootMotion = true;
 
             _player.Animator.SetFloat(PlayerRoot.SpeedHash, 0f);
             _player.Animator.SetTrigger(PlayerRoot.AttackHash);
@@ -38,7 +39,11 @@ namespace PlagueHunter.Player
                 _player.Machine.SetState(_player.Idle);
         }
 
-        public void Exit() => _alreadyHit.Clear();
+        public void Exit()
+        {
+            _player.UseRootMotion = false;
+            _alreadyHit.Clear();
+        }
 
         private bool IsInHitWindow(float previous, float current)
         {

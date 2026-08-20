@@ -28,6 +28,7 @@ namespace PlagueHunter.Player
         public AttackState Attack { get; private set; }
 
         public Transform HitPoint => _hitPoint;
+        public bool UseRootMotion { get; set; }
 
         public void Compose(GameplayInputReader input, Transform cameraTransform)
         {
@@ -71,6 +72,16 @@ namespace PlagueHunter.Player
         private void Update()
         {
             _machine.Tick(Time.deltaTime);
+        }
+
+        private void OnAnimatorMove()
+        {
+            if (!UseRootMotion) return;
+
+            Vector3 motion = _animator.deltaPosition;
+            motion.y = _config.GroundedGravity * Time.deltaTime;
+
+            _controller.Move(motion);
         }
 
         private void OnDrawGizmosSelected()
