@@ -40,7 +40,7 @@ namespace PlagueHunter.Player
             Rotate(direction, deltaTime);
         }
 
-        private Vector3 ToCameraSpace(Vector2 moveInput)
+        public Vector3 ToCameraSpace(Vector2 moveInput)
         {
             Vector2 clamped = Vector2.ClampMagnitude(moveInput, 1f);
 

@@ -17,6 +17,8 @@ namespace PlagueHunter.Player
 
         public void Enter()
         {
+            _player.transform.rotation = Quaternion.LookRotation(_player.GetAimDirection());
+
             _timer = 0f;
             _alreadyHit.Clear();
 

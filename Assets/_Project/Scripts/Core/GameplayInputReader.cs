@@ -10,6 +10,7 @@ namespace PlagueHunter.Core
 
         public Vector2 Move { get; private set; }
         public Vector2 Look { get; private set; }
+        public bool IsGamepad { get; private set; }
 
         public event Action AttackPressed;
         public event Action DodgePressed;
@@ -31,22 +32,40 @@ namespace PlagueHunter.Core
             _controls.Dispose();
         }
 
-        public void OnMove(InputAction.CallbackContext ctx) => Move = ctx.ReadValue<Vector2>();
-        public void OnLook(InputAction.CallbackContext ctx) => Look = ctx.ReadValue<Vector2>();
+        public void OnMove(InputAction.CallbackContext ctx)
+        {
+            TrackDevice(ctx);
+            Move = ctx.ReadValue<Vector2>();
+        }
+
+        public void OnLook(InputAction.CallbackContext ctx)
+        {
+            TrackDevice(ctx);
+            Look = ctx.ReadValue<Vector2>();
+        }
 
         public void OnAttack(InputAction.CallbackContext ctx)
         {
-            if(ctx.performed) AttackPressed?.Invoke();
-        } 
+            TrackDevice(ctx);
+            if (ctx.performed) AttackPressed?.Invoke();
+        }
 
         public void OnDodge(InputAction.CallbackContext ctx)
         {
-            if(ctx.performed) DodgePressed?.Invoke();
-        } 
+            TrackDevice(ctx);
+            if (ctx.performed) DodgePressed?.Invoke();
+        }
 
         public void OnLockOn(InputAction.CallbackContext ctx)
         {
-            if(ctx.performed) LockOnPressed?.Invoke();
-        } 
-    }    
+            TrackDevice(ctx);
+            if (ctx.performed) LockOnPressed?.Invoke();
+        }
+
+        private void TrackDevice(InputAction.CallbackContext ctx)
+        {
+            if (ctx.control?.device is Gamepad) IsGamepad = true;
+            else if (ctx.control?.device is Mouse or Keyboard) IsGamepad = false;
+        }
+    }
 }

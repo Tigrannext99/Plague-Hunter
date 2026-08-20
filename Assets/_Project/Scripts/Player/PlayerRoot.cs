@@ -15,6 +15,8 @@ namespace PlagueHunter.Player
 
         private readonly StateMachine _machine = new StateMachine();
 
+        private Camera _camera;
+
         public GameplayInputReader Input { get; private set; }
         public PlayerLocomotion Locomotion { get; private set; }
         public Animator Animator => _animator;
@@ -30,6 +32,7 @@ namespace PlagueHunter.Player
         public void Compose(GameplayInputReader input, Transform cameraTransform)
         {
             Input = input;
+            _camera = cameraTransform.GetComponent<Camera>();
             Locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
 
             Idle = new IdleState(this);
@@ -37,6 +40,32 @@ namespace PlagueHunter.Player
             Attack = new AttackState(this);
 
             _machine.SetState(Idle);
+        }
+
+        public Vector3 GetAimDirection()
+        {
+            return Input.IsGamepad ? AimFromStick() : AimFromCursor();
+        }
+
+        private Vector3 AimFromStick()
+        {
+            Vector3 direction = Locomotion.ToCameraSpace(Input.Move);
+            return direction.sqrMagnitude < 0.0001f ? transform.forward : direction.normalized;
+        }
+
+        private Vector3 AimFromCursor()
+        {
+            if (_camera == null) return transform.forward;
+
+            Ray ray = _camera.ScreenPointToRay(Input.Look);
+            Plane ground = new Plane(Vector3.up, transform.position);
+
+            if (!ground.Raycast(ray, out float distance)) return transform.forward;
+
+            Vector3 flat = ray.GetPoint(distance) - transform.position;
+            flat.y = 0f;
+
+            return flat.sqrMagnitude < 0.0001f ? transform.forward : flat.normalized;
         }
 
         private void Update()

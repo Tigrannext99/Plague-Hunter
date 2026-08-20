@@ -16,8 +16,8 @@ namespace PlagueHunter.Core
             _input = new GameplayInputReader();
             _input.Enable();
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = true;
 
             try
             {
