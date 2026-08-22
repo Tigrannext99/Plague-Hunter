@@ -12,6 +12,7 @@ namespace PlagueHunter.Combat
         [SerializeField] float _maxHealth = 100f;
 
         [Header("Hit Flash")]
+        [SerializeField] bool _useFlash = true;
         [SerializeField] Renderer _renderer;
         [SerializeField] Color _flashColor = Color.white;
         [SerializeField] Color _deadColor = new Color(0.15f, 0.15f, 0.15f, 1f);
@@ -32,13 +33,29 @@ namespace PlagueHunter.Combat
         void Awake()
         {
             _current = _maxHealth;
-            _block = new MaterialPropertyBlock();
+
+            if (!_useFlash) return;
 
             if (_renderer == null)
                 _renderer = GetComponentInChildren<Renderer>();
 
-            if (_renderer != null)
-                _baseColor = _renderer.sharedMaterial.GetColor(BaseColorId);
+            if (_renderer == null)
+            {
+                _useFlash = false;
+                return;
+            }
+
+            Material material = _renderer.sharedMaterial;
+
+            if (material == null || !material.HasProperty(BaseColorId))
+            {
+                Debug.LogWarning($"[Health] у материала на {name} нет свойства _BaseColor — флеш выключен");
+                _useFlash = false;
+                return;
+            }
+
+            _block = new MaterialPropertyBlock();
+            _baseColor = material.GetColor(BaseColorId);
         }
 
         public void TakeDamage(float amount)
@@ -65,13 +82,19 @@ namespace PlagueHunter.Combat
 
             _flashTimer -= Time.deltaTime;
 
+            if (_flashTimer <= 0f)
+            {
+                SetColor(_baseColor);
+                return;
+            }
+
             float t = Mathf.Clamp01(_flashTimer / _flashDuration);
             SetColor(Color.Lerp(_baseColor, _flashColor, t));
         }
 
         void SetColor(Color color)
         {
-            if (_renderer == null) return;
+            if (!_useFlash || _renderer == null) return;
 
             _renderer.GetPropertyBlock(_block);
             _block.SetColor(BaseColorId, color);
