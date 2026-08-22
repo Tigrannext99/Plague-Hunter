@@ -20,6 +20,9 @@ namespace PlagueHunter.Combat
         [SerializeField] private float _damage = 25f;
         [SerializeField] private Vector3 _hitBoxHalfExtents = new Vector3(0.15f, 0.15f, 0.5f);
 
+        [Header("Feedback")]
+        [SerializeField] private float _impulseScale = 1f;
+
         private int _stateHash = -1;
 
         public string StateName => _stateName;
@@ -40,6 +43,7 @@ namespace PlagueHunter.Combat
         public float ComboEnd => _comboEnd;
         public float Damage => _damage;
         public Vector3 HitBoxHalfExtents => _hitBoxHalfExtents;
+        public float ImpulseScale => _impulseScale;
 
         private void OnValidate()
         {
@@ -49,6 +53,7 @@ namespace PlagueHunter.Combat
             _comboEnd = Mathf.Max(_comboEnd, _comboStart);
             _duration = Mathf.Max(_duration, _comboEnd);
             _duration = Mathf.Max(_duration, _hitEnd);
+            _impulseScale = Mathf.Max(_impulseScale, 0f);
         }
     }
 }
