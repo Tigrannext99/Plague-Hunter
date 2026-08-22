@@ -52,7 +52,7 @@ namespace PlagueHunter.Player
             _alreadyHit.Clear();
             _player.ConsumeAttackBuffer();
 
-            _player.Animator.CrossFade(PlayerRoot.LocomotionHash, 0.001f, 0, 0f);
+            _player.Animator.CrossFade(PlayerRoot.LocomotionHash, 0.1f, 0, 0f);
         }
 
         private bool HasNext => _index + 1 < _player.Combo.Length;

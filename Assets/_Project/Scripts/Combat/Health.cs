@@ -25,6 +25,7 @@ namespace PlagueHunter.Combat
         public float Current => _current;
         public float Max => _maxHealth;
         public bool IsDead => _current <= 0f;
+        public bool Invulnerable { get; set; }
 
         public event Action Died;
 
@@ -32,20 +33,17 @@ namespace PlagueHunter.Combat
         {
             _current = _maxHealth;
             _block = new MaterialPropertyBlock();
-            
 
             if (_renderer == null)
                 _renderer = GetComponentInChildren<Renderer>();
 
             if (_renderer != null)
                 _baseColor = _renderer.sharedMaterial.GetColor(BaseColorId);
-
-            Debug.Log(_renderer.sharedMaterial.shader.name);
         }
 
         public void TakeDamage(float amount)
         {
-            if (IsDead || amount <= 0f) return;
+            if (Invulnerable || IsDead || amount <= 0f) return;
 
             _current = Mathf.Max(0f, _current - amount);
 

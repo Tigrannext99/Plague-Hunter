@@ -18,5 +18,5 @@ MonoBehaviour:
   _hitEnd: 0.35
   _comboStart: 0
   _comboEnd: 0
-  _damage: 10
+  _damage: 11.5
   _hitBoxHalfExtents: {x: 0.6, y: 0.5, z: 0.9}

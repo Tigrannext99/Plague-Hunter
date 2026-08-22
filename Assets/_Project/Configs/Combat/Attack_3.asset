@@ -16,7 +16,7 @@ MonoBehaviour:
   _duration: 1.867
   _hitStart: 0
   _hitEnd: 1
-  _comboStart: 0.3
-  _comboEnd: 1
-  _damage: 10
+  _comboStart: 0.5
+  _comboEnd: 1.2
+  _damage: 11
   _hitBoxHalfExtents: {x: 0.6, y: 0.5, z: 0.9}
