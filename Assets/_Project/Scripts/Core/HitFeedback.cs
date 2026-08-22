@@ -1,4 +1,3 @@
-using PlagueHunter.Core;
 using UnityEngine;
 
 namespace PlagueHunter.Combat
@@ -7,16 +6,12 @@ namespace PlagueHunter.Combat
     {
         [SerializeField] private ParticleSystem _hitParticle;
         [SerializeField] private int _poolSize = 8;
-        [SerializeField] private CameraImpulse _impulse;
 
         private ParticleSystem[] _pool;
         private int _next;
 
         private void Awake()
         {
-            if (_impulse == null && Camera.main != null)
-                _impulse = Camera.main.GetComponentInParent<CameraImpulse>();
-
             if (_hitParticle == null)
             {
                 Debug.LogWarning("[HitFeedback] партикл не назначен");
@@ -32,12 +27,9 @@ namespace PlagueHunter.Combat
             }
         }
 
-        public void PlayHit(Vector3 point, Vector3 direction, float impulseScale)
+        public void PlayHit(Vector3 point, Vector3 direction)
         {
             SpawnParticle(point, direction);
-
-            if (_impulse != null)
-                _impulse.Play(impulseScale);
         }
 
         private void SpawnParticle(Vector3 point, Vector3 direction)

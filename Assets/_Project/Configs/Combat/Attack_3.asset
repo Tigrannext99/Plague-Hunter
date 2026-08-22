@@ -20,3 +20,4 @@ MonoBehaviour:
   _comboEnd: 1.2
   _damage: 11
   _hitBoxHalfExtents: {x: 0.6, y: 0.5, z: 0.9}
+  _impulseScale: 2
