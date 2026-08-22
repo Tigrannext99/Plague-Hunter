@@ -17,6 +17,12 @@ namespace PlagueHunter.Player
             _player.Locomotion.Tick(_player.Input.Move, deltaTime);
             _player.Animator.SetFloat(PlayerRoot.SpeedHash, _player.Locomotion.CurrentSpeed);
 
+            if (_player.ConsumeDodgeBuffer())
+            {
+                _player.Machine.SetState(_player.Dodge);
+                return;
+            }
+
             if (_player.ConsumeAttackBuffer())
             {
                 _player.Machine.SetState(_player.Attack);
