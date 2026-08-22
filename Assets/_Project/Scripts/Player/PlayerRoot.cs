@@ -11,27 +11,33 @@ namespace PlagueHunter.Player
 
         [SerializeField] private CharacterController _controller;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Health _health;
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private ComboData _combo;
+        [SerializeField] private DodgeData _dodgeData;
         [SerializeField] private Transform _hitPoint;
 
         private const float AttackBufferWindow = 0.2f;
+        private const float DodgeBufferWindow = 0.2f;
 
         private readonly StateMachine _machine = new StateMachine();
 
         private Camera _camera;
         private float _attackPressedAt = float.NegativeInfinity;
+        private float _dodgePressedAt = float.NegativeInfinity;
 
         public GameplayInputReader Input { get; private set; }
         public PlayerLocomotion Locomotion { get; private set; }
         public Animator Animator => _animator;
         public PlayerConfig Config => _config;
         public ComboData Combo => _combo;
+        public DodgeData DodgeData => _dodgeData;
         public StateMachine Machine => _machine;
 
         public IdleState Idle { get; private set; }
         public MoveState Move { get; private set; }
         public AttackState Attack { get; private set; }
+        public DodgeState Dodge { get; private set; }
 
         public Transform HitPoint => _hitPoint;
         public bool UseRootMotion { get; set; }
@@ -40,6 +46,7 @@ namespace PlagueHunter.Player
         {
             Input = input;
             Input.AttackPressed += OnAttackPressed;
+            Input.DodgePressed += OnDodgePressed;
 
             _camera = cameraTransform.GetComponent<Camera>();
             Locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
@@ -47,6 +54,7 @@ namespace PlagueHunter.Player
             Idle = new IdleState(this);
             Move = new MoveState(this);
             Attack = new AttackState(this);
+            Dodge = new DodgeState(this);
 
             ValidateAnimator();
 
@@ -61,6 +69,19 @@ namespace PlagueHunter.Player
             return true;
         }
 
+        public bool ConsumeDodgeBuffer()
+        {
+            if (Time.time - _dodgePressedAt > DodgeBufferWindow) return false;
+
+            _dodgePressedAt = float.NegativeInfinity;
+            return true;
+        }
+
+        public void SetInvulnerable(bool value)
+        {
+            if (_health != null) _health.Invulnerable = value;
+        }
+
         public Vector3 GetAimDirection()
         {
             return Input.IsGamepad ? AimFromStick() : AimFromCursor();
@@ -70,6 +91,14 @@ namespace PlagueHunter.Player
         {
             if (!_animator.HasState(0, LocomotionHash))
                 Debug.LogError("[PlayerRoot] в аниматоре нет стейта 'Locomotion'");
+
+            if (_dodgeData == null)
+                Debug.LogError("[PlayerRoot] поле Dodge Data пустое");
+            else if (!_animator.HasState(0, _dodgeData.StateHash))
+                Debug.LogError($"[PlayerRoot] в аниматоре нет стейта '{_dodgeData.StateName}'");
+
+            if (_health == null)
+                Debug.LogWarning("[PlayerRoot] поле Health пустое — i-frames работать не будут");
 
             if (_combo == null)
             {
@@ -114,6 +143,7 @@ namespace PlagueHunter.Player
         }
 
         private void OnAttackPressed() => _attackPressedAt = Time.time;
+        private void OnDodgePressed() => _dodgePressedAt = Time.time;
 
         private void Update()
         {
@@ -122,8 +152,10 @@ namespace PlagueHunter.Player
 
         private void OnDestroy()
         {
-            if (Input != null)
-                Input.AttackPressed -= OnAttackPressed;
+            if (Input == null) return;
+
+            Input.AttackPressed -= OnAttackPressed;
+            Input.DodgePressed -= OnDodgePressed;
         }
 
         private void OnAnimatorMove()
