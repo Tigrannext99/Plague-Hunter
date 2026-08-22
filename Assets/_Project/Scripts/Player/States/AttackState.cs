@@ -35,6 +35,12 @@ namespace PlagueHunter.Player
             if (IsInHitWindow(previous, _timer))
                 ScanForTargets();
 
+            if (_timer >= _current.HitEnd && _player.ConsumeDodgeBuffer())
+            {
+                _player.Machine.SetState(_player.Dodge);
+                return;
+            }
+
             if (IsInComboWindow(_timer) && HasNext && _player.ConsumeAttackBuffer())
             {
                 _index++;
@@ -52,7 +58,7 @@ namespace PlagueHunter.Player
             _alreadyHit.Clear();
             _player.ConsumeAttackBuffer();
 
-            _player.Animator.CrossFade(PlayerRoot.LocomotionHash, 0.1f, 0, 0f);
+            _player.Animator.CrossFade(PlayerRoot.LocomotionHash, 0.001f, 0, 0f);
         }
 
         private bool HasNext => _index + 1 < _player.Combo.Length;
