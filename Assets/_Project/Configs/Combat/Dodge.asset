@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.DodgeData
   _stateName: Dodge
   _duration: 1
-  _crossFade: 0.05
+  _crossFade: 0.2
   _iFramesStart: 0.05
   _iFramesEnd: 0.05
-  _cancelTime: 0.6
+  _cancelTime: 0.7
