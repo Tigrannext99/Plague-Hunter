@@ -16,9 +16,6 @@ namespace PlagueHunter.Core
             _input = new GameplayInputReader();
             _input.Enable();
 
-            // Cursor.lockState = CursorLockMode.Locked;
-            // Cursor.visible = true;
-
             try
             {
                 await LoadGameplayAsync(destroyCancellationToken);
@@ -26,6 +23,32 @@ namespace PlagueHunter.Core
             catch (OperationCanceledException)
             {
             }
+        }
+
+        private async void RequestRestart()
+        {
+            try
+            {
+                await RestartAsync(destroyCancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        private async Awaitable RestartAsync(CancellationToken token)
+        {
+            var scene = SceneManager.GetSceneByName(_gameplaySceneName);
+
+            if (scene.isLoaded)
+            {
+                var unload = SceneManager.UnloadSceneAsync(scene);
+
+                while (unload is { isDone: false })
+                    await Awaitable.NextFrameAsync(token);
+            }
+
+            await LoadGameplayAsync(token);
         }
 
         private async Awaitable LoadGameplayAsync(CancellationToken token)
@@ -48,7 +71,7 @@ namespace PlagueHunter.Core
                 return;
             }
 
-            root.Compose(_input);
+            root.Compose(_input, RequestRestart);
         }
 
         private static GameplayRoot FindRoot(Scene scene)
