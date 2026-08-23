@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace PlagueHunter.Player
 {
+    [RequireComponent(typeof(Health))]
     public sealed class PlayerRoot : MonoBehaviour
     {
         public static readonly int SpeedHash = Animator.StringToHash("Speed");
         public static readonly int LocomotionHash = Animator.StringToHash("Locomotion");
+        public static readonly int DeathHash = Animator.StringToHash("Death");
 
         [SerializeField] private CharacterController _controller;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Health _health;
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private ComboData _combo;
         [SerializeField] private DodgeData _dodgeData;
@@ -22,6 +23,8 @@ namespace PlagueHunter.Player
 
         private readonly StateMachine _machine = new StateMachine();
 
+        private Health _health;
+        private HitFeedback _feedback;
         private Camera _camera;
         private float _attackPressedAt = float.NegativeInfinity;
         private float _dodgePressedAt = float.NegativeInfinity;
@@ -32,21 +35,32 @@ namespace PlagueHunter.Player
         public PlayerConfig Config => _config;
         public ComboData Combo => _combo;
         public DodgeData DodgeData => _dodgeData;
+        public Health Health => _health;
+        public HitFeedback Feedback => _feedback;
         public StateMachine Machine => _machine;
 
         public IdleState Idle { get; private set; }
         public MoveState Move { get; private set; }
         public AttackState Attack { get; private set; }
         public DodgeState Dodge { get; private set; }
+        public DeathState Death { get; private set; }
 
         public Transform HitPoint => _hitPoint;
         public bool UseRootMotion { get; set; }
+
+        private void Awake()
+        {
+            _health = GetComponent<Health>();
+            _feedback = GetComponent<HitFeedback>();
+        }
 
         public void Compose(GameplayInputReader input, Transform cameraTransform)
         {
             Input = input;
             Input.AttackPressed += OnAttackPressed;
             Input.DodgePressed += OnDodgePressed;
+
+            _health.Died += OnDied;
 
             _camera = cameraTransform.GetComponent<Camera>();
             Locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
@@ -55,6 +69,7 @@ namespace PlagueHunter.Player
             Move = new MoveState(this);
             Attack = new AttackState(this);
             Dodge = new DodgeState(this);
+            Death = new DeathState(this);
 
             ValidateAnimator();
 
@@ -77,28 +92,27 @@ namespace PlagueHunter.Player
             return true;
         }
 
-        public void SetInvulnerable(bool value)
-        {
-            if (_health != null) _health.Invulnerable = value;
-        }
+        public void SetInvulnerable(bool value) => _health.Invulnerable = value;
 
         public Vector3 GetAimDirection()
         {
             return Input.IsGamepad ? AimFromStick() : AimFromCursor();
         }
 
+        private void OnDied() => _machine.SetState(Death);
+
         private void ValidateAnimator()
         {
             if (!_animator.HasState(0, LocomotionHash))
                 Debug.LogError("[PlayerRoot] в аниматоре нет стейта 'Locomotion'");
 
+            if (!_animator.HasState(0, DeathHash))
+                Debug.LogError("[PlayerRoot] в аниматоре нет стейта 'Death'");
+
             if (_dodgeData == null)
                 Debug.LogError("[PlayerRoot] поле Dodge Data пустое");
             else if (!_animator.HasState(0, _dodgeData.StateHash))
                 Debug.LogError($"[PlayerRoot] в аниматоре нет стейта '{_dodgeData.StateName}'");
-
-            if (_health == null)
-                Debug.LogWarning("[PlayerRoot] поле Health пустое — i-frames работать не будут");
 
             if (_combo == null)
             {
@@ -152,6 +166,9 @@ namespace PlagueHunter.Player
 
         private void OnDestroy()
         {
+            if (_health != null)
+                _health.Died -= OnDied;
+
             if (Input == null) return;
 
             Input.AttackPressed -= OnAttackPressed;
