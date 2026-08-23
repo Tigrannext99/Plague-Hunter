@@ -48,10 +48,19 @@ namespace PlagueHunter.Player
                 return;
             }
 
+            bool hasMoveInput = _player.Input.Move.sqrMagnitude > 0.01f;
+
+            // После CancelTime ввод движения обрывает хвост анимации.
+            // Без этого управление возвращается только на Duration и додж ощущается вязким.
+            if (hasMoveInput)
+            {
+                _player.Machine.SetState(_player.Move);
+                return;
+            }
+
             if (_timer < _data.Duration) return;
 
-            _player.Machine.SetState(
-                _player.Input.Move.sqrMagnitude > 0.01f ? _player.Move : _player.Idle);
+            _player.Machine.SetState(_player.Idle);
         }
 
         public void Exit()
