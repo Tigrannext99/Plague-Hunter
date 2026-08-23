@@ -25,14 +25,16 @@ namespace PlagueHunter.Combat
 
         public float Current => _current;
         public float Max => _maxHealth;
+        public float Normalized => _maxHealth <= 0f ? 0f : _current / _maxHealth;
         public bool IsDead => _current <= 0f;
         public bool Invulnerable { get; set; }
 
         public event Action Died;
+        public event Action<float> Changed;
 
         void Awake()
         {
-            _current = _maxHealth;
+            ResetHealth();
 
             if (!_useFlash) return;
 
@@ -58,11 +60,22 @@ namespace PlagueHunter.Combat
             _baseColor = material.GetColor(BaseColorId);
         }
 
+        public void ResetHealth()
+        {
+            _current = _maxHealth;
+            _flashTimer = 0f;
+            Invulnerable = false;
+
+            Changed?.Invoke(Normalized);
+        }
+
         public void TakeDamage(float amount)
         {
             if (Invulnerable || IsDead || amount <= 0f) return;
 
             _current = Mathf.Max(0f, _current - amount);
+
+            Changed?.Invoke(Normalized);
 
             if (IsDead)
             {
