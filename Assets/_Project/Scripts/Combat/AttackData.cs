@@ -16,6 +16,9 @@ namespace PlagueHunter.Combat
         [SerializeField] private float _comboStart = 0.4f;
         [SerializeField] private float _comboEnd = 0.8f;
 
+        [Header("Recovery (seconds)")]
+        [SerializeField] private float _cancelTime = 0.8f;
+
         [Header("Damage")]
         [SerializeField] private float _damage = 25f;
         [SerializeField] private Vector3 _hitBoxHalfExtents = new Vector3(0.15f, 0.15f, 0.5f);
@@ -41,6 +44,7 @@ namespace PlagueHunter.Combat
         public float HitEnd => _hitEnd;
         public float ComboStart => _comboStart;
         public float ComboEnd => _comboEnd;
+        public float CancelTime => _cancelTime;
         public float Damage => _damage;
         public Vector3 HitBoxHalfExtents => _hitBoxHalfExtents;
         public float ImpulseScale => _impulseScale;
@@ -53,6 +57,10 @@ namespace PlagueHunter.Combat
             _comboEnd = Mathf.Max(_comboEnd, _comboStart);
             _duration = Mathf.Max(_duration, _comboEnd);
             _duration = Mathf.Max(_duration, _hitEnd);
+
+            // Отмена раньше конца хитбокса съела бы сам удар.
+            _cancelTime = Mathf.Clamp(_cancelTime, _hitEnd, _duration);
+
             _impulseScale = Mathf.Max(_impulseScale, 0f);
         }
     }

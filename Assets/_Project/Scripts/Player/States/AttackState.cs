@@ -55,6 +55,14 @@ namespace PlagueHunter.Player
                 return;
             }
 
+            // Проверка идёт после комбо-буфера: нажатая атака важнее зажатого стика,
+            // иначе на ходу комбо было бы не собрать.
+            if (_timer >= _current.CancelTime && _player.Input.Move.sqrMagnitude > 0.01f)
+            {
+                _player.Machine.SetState(_player.Move);
+                return;
+            }
+
             if (_timer >= _current.Duration)
                 _player.Machine.SetState(_player.Idle);
         }
