@@ -815,7 +815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Core.GameplayRoot
   _player: {fileID: 3071876123256565541}
-  _restartDelay: 2.5
+  _restartDelay: 1
 --- !u!1 &1119959162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,11 +1294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.Health
   _maxHealth: 100
-  _useFlash: 1
-  _renderer: {fileID: 0}
-  _flashColor: {r: 1, g: 1, b: 1, a: 1}
-  _deadColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
-  _flashDuration: 0.12
 --- !u!1001 &7097522888225811069
 PrefabInstance:
   m_ObjectHideFlags: 0
