@@ -1,12 +1,14 @@
 using System;
+using PlagueHunter.Core;
 using PlagueHunter.Player;
 using UnityEngine;
 
-namespace PlagueHunter.Core
+namespace PlagueHunter.Gameplay
 {
     public sealed class GameplayRoot : MonoBehaviour
     {
         [SerializeField] private PlayerRoot _player;
+        [SerializeField] private Camera _camera;
         [SerializeField] private float _restartDelay = 2.5f;
 
         private GameplayInputReader _input;
@@ -20,10 +22,21 @@ namespace PlagueHunter.Core
 
             _input.LockOnPressed += OnLockOnPressed;
 
-            _player.Compose(input, Camera.main.transform);
+            _player.Compose(input, ResolveCamera());
             _player.Health.Died += OnPlayerDied;
 
             Debug.Log("[GameplayRoot] Composed");
+        }
+
+        private Camera ResolveCamera()
+        {
+            if (_camera != null) return _camera;
+
+            _camera = Camera.main;
+
+            Debug.LogWarning("[GameplayRoot] поле Camera пустое, взята Camera.main — назначь ссылку в инспекторе");
+
+            return _camera;
         }
 
         private void OnPlayerDied()

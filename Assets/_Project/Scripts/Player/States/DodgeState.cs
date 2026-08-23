@@ -38,7 +38,7 @@ namespace PlagueHunter.Player
 
             if (_player.ConsumeDodgeBuffer())
             {
-                Enter();
+                _player.Machine.ReEnter();
                 return;
             }
 

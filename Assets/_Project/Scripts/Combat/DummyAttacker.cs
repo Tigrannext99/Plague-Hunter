@@ -106,28 +106,14 @@ namespace PlagueHunter.Combat
 
         private void Strike()
         {
-            int count = Physics.OverlapSphereNonAlloc(
-                _strikePoint,
-                _attackRadius,
-                _overlaps,
-                _targetMask,
-                QueryTriggerInteraction.Ignore);
+            int count = DamageScan.Sphere(_strikePoint, _attackRadius, _targetMask, _overlaps);
 
-            for (int i = 0; i < count; i++)
-            {
-                if (_overlaps[i].TryGetComponent(out IDamageable damageable))
-                    damageable.TakeDamage(_damage);
-            }
+            DamageScan.Apply(_overlaps, count, _damage);
         }
 
         private Transform FindTarget()
         {
-            int count = Physics.OverlapSphereNonAlloc(
-                transform.position,
-                _aggroRadius,
-                _overlaps,
-                _targetMask,
-                QueryTriggerInteraction.Ignore);
+            int count = DamageScan.Sphere(transform.position, _aggroRadius, _targetMask, _overlaps);
 
             return count > 0 ? _overlaps[0].transform : null;
         }

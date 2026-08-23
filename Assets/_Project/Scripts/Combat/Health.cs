@@ -3,25 +3,16 @@ using UnityEngine;
 
 namespace PlagueHunter.Combat
 {
+    /// <summary>
+    /// Модель здоровья. Только данные и события — никакой презентации.
+    /// Визуальная реакция на урон живёт в <see cref="HealthFlash"/>.
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class Health : MonoBehaviour, IDamageable
     {
-        static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        [SerializeField] private float _maxHealth = 100f;
 
-        [Header("Health")]
-        [SerializeField] float _maxHealth = 100f;
-
-        [Header("Hit Flash")]
-        [SerializeField] bool _useFlash = true;
-        [SerializeField] Renderer _renderer;
-        [SerializeField] Color _flashColor = Color.white;
-        [SerializeField] Color _deadColor = new Color(0.15f, 0.15f, 0.15f, 1f);
-        [SerializeField] float _flashDuration = 0.12f;
-
-        MaterialPropertyBlock _block;
-        Color _baseColor;
-        float _flashTimer;
-        float _current;
+        private float _current;
 
         public float Current => _current;
         public float Max => _maxHealth;
@@ -30,40 +21,14 @@ namespace PlagueHunter.Combat
         public bool Invulnerable { get; set; }
 
         public event Action Died;
+        public event Action Damaged;
         public event Action<float> Changed;
 
-        void Awake()
-        {
-            ResetHealth();
-
-            if (!_useFlash) return;
-
-            if (_renderer == null)
-                _renderer = GetComponentInChildren<Renderer>();
-
-            if (_renderer == null)
-            {
-                _useFlash = false;
-                return;
-            }
-
-            Material material = _renderer.sharedMaterial;
-
-            if (material == null || !material.HasProperty(BaseColorId))
-            {
-                Debug.LogWarning($"[Health] у материала на {name} нет свойства _BaseColor — флеш выключен");
-                _useFlash = false;
-                return;
-            }
-
-            _block = new MaterialPropertyBlock();
-            _baseColor = material.GetColor(BaseColorId);
-        }
+        private void Awake() => ResetHealth();
 
         public void ResetHealth()
         {
             _current = _maxHealth;
-            _flashTimer = 0f;
             Invulnerable = false;
 
             Changed?.Invoke(Normalized);
@@ -79,39 +44,11 @@ namespace PlagueHunter.Combat
 
             if (IsDead)
             {
-                _flashTimer = 0f;
-                SetColor(_deadColor);
                 Died?.Invoke();
                 return;
             }
 
-            _flashTimer = _flashDuration;
-            SetColor(_flashColor);
-        }
-
-        void Update()
-        {
-            if (_flashTimer <= 0f) return;
-
-            _flashTimer -= Time.deltaTime;
-
-            if (_flashTimer <= 0f)
-            {
-                SetColor(_baseColor);
-                return;
-            }
-
-            float t = Mathf.Clamp01(_flashTimer / _flashDuration);
-            SetColor(Color.Lerp(_baseColor, _flashColor, t));
-        }
-
-        void SetColor(Color color)
-        {
-            if (!_useFlash || _renderer == null) return;
-
-            _renderer.GetPropertyBlock(_block);
-            _block.SetColor(BaseColorId, color);
-            _renderer.SetPropertyBlock(_block);
+            Damaged?.Invoke();
         }
     }
 }

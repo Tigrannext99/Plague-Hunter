@@ -1,15 +1,17 @@
 using System;
 using System.Threading;
+using PlagueHunter.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PlagueHunter.Core
+namespace PlagueHunter.Gameplay
 {
     public sealed class Bootstrapper : MonoBehaviour
     {
         [SerializeField] private string _gameplaySceneName = "Gameplay";
 
         private GameplayInputReader _input;
+        private bool _busy;
 
         private async void Start()
         {
@@ -27,12 +29,20 @@ namespace PlagueHunter.Core
 
         private async void RequestRestart()
         {
+            if (_busy) return;
+
+            _busy = true;
+
             try
             {
                 await RestartAsync(destroyCancellationToken);
             }
             catch (OperationCanceledException)
             {
+            }
+            finally
+            {
+                _busy = false;
             }
         }
 
@@ -67,7 +77,7 @@ namespace PlagueHunter.Core
 
             if (root == null)
             {
-                Debug.LogError($"[Bootstrapper] GameplayRoot not found in {_gameplaySceneName}");
+                Debug.LogError($"[Bootstrapper] в сцене {_gameplaySceneName} не найден GameplayRoot");
                 return;
             }
 
@@ -85,12 +95,6 @@ namespace PlagueHunter.Core
             return null;
         }
 
-        private void OnDestroy()
-        {
-            _input?.Dispose();
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        private void OnDestroy() => _input?.Dispose();
     }
 }

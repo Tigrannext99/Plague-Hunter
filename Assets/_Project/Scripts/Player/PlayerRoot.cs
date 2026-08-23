@@ -18,9 +18,6 @@ namespace PlagueHunter.Player
         [SerializeField] private DodgeData _dodgeData;
         [SerializeField] private Transform _hitPoint;
 
-        private const float AttackBufferWindow = 0.2f;
-        private const float DodgeBufferWindow = 0.2f;
-
         private readonly StateMachine _machine = new StateMachine();
 
         private Health _health;
@@ -54,7 +51,7 @@ namespace PlagueHunter.Player
             _feedback = GetComponent<HitFeedback>();
         }
 
-        public void Compose(GameplayInputReader input, Transform cameraTransform)
+        public void Compose(GameplayInputReader input, Camera camera)
         {
             Input = input;
             Input.AttackPressed += OnAttackPressed;
@@ -62,8 +59,8 @@ namespace PlagueHunter.Player
 
             _health.Died += OnDied;
 
-            _camera = cameraTransform.GetComponent<Camera>();
-            Locomotion = new PlayerLocomotion(_controller, cameraTransform, _config);
+            _camera = camera;
+            Locomotion = new PlayerLocomotion(_controller, camera.transform, _config);
 
             Idle = new IdleState(this);
             Move = new MoveState(this);
@@ -71,14 +68,16 @@ namespace PlagueHunter.Player
             Dodge = new DodgeState(this);
             Death = new DeathState(this);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             ValidateAnimator();
+#endif
 
             _machine.SetState(Idle);
         }
 
         public bool ConsumeAttackBuffer()
         {
-            if (Time.time - _attackPressedAt > AttackBufferWindow) return false;
+            if (Time.time - _attackPressedAt > _config.AttackBufferWindow) return false;
 
             _attackPressedAt = float.NegativeInfinity;
             return true;
@@ -86,7 +85,7 @@ namespace PlagueHunter.Player
 
         public bool ConsumeDodgeBuffer()
         {
-            if (Time.time - _dodgePressedAt > DodgeBufferWindow) return false;
+            if (Time.time - _dodgePressedAt > _config.DodgeBufferWindow) return false;
 
             _dodgePressedAt = float.NegativeInfinity;
             return true;
@@ -101,6 +100,7 @@ namespace PlagueHunter.Player
 
         private void OnDied() => _machine.SetState(Death);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void ValidateAnimator()
         {
             if (!_animator.HasState(0, LocomotionHash))
@@ -134,6 +134,7 @@ namespace PlagueHunter.Player
                     Debug.LogError($"[PlayerRoot] в аниматоре нет стейта '{attack.StateName}' (ассет {attack.name})");
             }
         }
+#endif
 
         private Vector3 AimFromStick()
         {

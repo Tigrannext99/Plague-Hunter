@@ -24,6 +24,13 @@ namespace PlagueHunter.Player
             _player.Locomotion.Reset();
             _player.Animator.SetFloat(PlayerRoot.SpeedHash, 0f);
 
+            if (!HasUsableCombo())
+            {
+                Debug.LogError("[AttackState] комбо не настроено — атака пропущена");
+                _player.Machine.SetState(_player.Idle);
+                return;
+            }
+
             StartAttack(_player.Combo[0]);
         }
 
@@ -61,7 +68,10 @@ namespace PlagueHunter.Player
             _player.Animator.CrossFade(PlayerRoot.LocomotionHash, 0.001f, 0, 0f);
         }
 
-        private bool HasNext => _index + 1 < _player.Combo.Length;
+        private bool HasNext => _index + 1 < _player.Combo.Length && _player.Combo[_index + 1] != null;
+
+        private bool HasUsableCombo()
+            => _player.Combo != null && _player.Combo.Length > 0 && _player.Combo[0] != null;
 
         private void StartAttack(AttackData attack)
         {
@@ -83,21 +93,14 @@ namespace PlagueHunter.Player
         {
             Transform point = _player.HitPoint;
 
-            int count = Physics.OverlapBoxNonAlloc(
+            int count = DamageScan.Box(
                 point.position,
                 _current.HitBoxHalfExtents,
-                _overlaps,
                 point.rotation,
                 _player.Config.EnemyMask,
-                QueryTriggerInteraction.Ignore);
+                _overlaps);
 
-            for (int i = 0; i < count; i++)
-            {
-                if (!_overlaps[i].TryGetComponent(out IDamageable damageable)) continue;
-                if (!_alreadyHit.Add(damageable)) continue;
-
-                damageable.TakeDamage(_current.Damage);
-            }
+            DamageScan.Apply(_overlaps, count, _current.Damage, _alreadyHit);
         }
     }
 }
