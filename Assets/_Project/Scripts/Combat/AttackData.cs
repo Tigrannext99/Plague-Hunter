@@ -17,7 +17,7 @@ namespace PlagueHunter.Combat
         [SerializeField] private float _comboEnd = 0.8f;
 
         [Header("Recovery (seconds)")]
-        [SerializeField] private float _cancelTime = 0.8f;
+        [SerializeField] private float _cancelTime = 0.35f;
 
         [Header("Damage")]
         [SerializeField] private float _damage = 25f;
@@ -58,8 +58,9 @@ namespace PlagueHunter.Combat
             _duration = Mathf.Max(_duration, _comboEnd);
             _duration = Mathf.Max(_duration, _hitEnd);
 
-            // Отмена раньше конца хитбокса съела бы сам удар.
-            _cancelTime = Mathf.Clamp(_cancelTime, _hitEnd, _duration);
+            // Отмена доступна на всей длине атаки — раннее прерывание
+            // это осознанный размен урона на выживание.
+            _cancelTime = Mathf.Clamp(_cancelTime, 0f, _duration);
 
             _impulseScale = Mathf.Max(_impulseScale, 0f);
         }
