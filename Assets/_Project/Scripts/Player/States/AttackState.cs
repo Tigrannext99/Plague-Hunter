@@ -42,7 +42,8 @@ namespace PlagueHunter.Player
             if (IsInHitWindow(previous, _timer))
                 ScanForTargets();
 
-            if (_timer >= _current.HitEnd && _player.ConsumeDodgeBuffer())
+            // Атаку прерывает только додж — с CancelTime, чтобы удар не пропадал.
+            if (_timer >= _current.CancelTime && _player.ConsumeDodgeBuffer())
             {
                 _player.Machine.SetState(_player.Dodge);
                 return;
@@ -52,14 +53,6 @@ namespace PlagueHunter.Player
             {
                 _index++;
                 StartAttack(_player.Combo[_index]);
-                return;
-            }
-
-            // Проверка идёт после комбо-буфера: нажатая атака важнее зажатого стика,
-            // иначе на ходу комбо было бы не собрать.
-            if (_timer >= _current.CancelTime && _player.Input.Move.sqrMagnitude > 0.01f)
-            {
-                _player.Machine.SetState(_player.Move);
                 return;
             }
 

@@ -4,6 +4,8 @@ namespace PlagueHunter.Player
 {
     public sealed class PlayerLocomotion
     {
+        private const float InputDeadZone = 0.0001f;
+
         private readonly CharacterController _controller;
         private readonly Transform _transform;
         private readonly Transform _cameraTransform;
@@ -40,17 +42,19 @@ namespace PlagueHunter.Player
             Rotate(direction, deltaTime);
         }
 
+        /// <summary>
+        /// Отклонение стика задаёт только направление, не скорость:
+        /// любой ненулевой ввод даёт полный ход, как на клавиатуре.
+        /// </summary>
         public Vector3 ToCameraSpace(Vector2 moveInput)
         {
-            Vector2 clamped = Vector2.ClampMagnitude(moveInput, 1f);
-
-            if (clamped.sqrMagnitude < 0.0001f)
+            if (moveInput.sqrMagnitude < InputDeadZone)
                 return Vector3.zero;
 
             Vector3 forward = Flatten(_cameraTransform.forward);
             Vector3 right = Flatten(_cameraTransform.right);
 
-            return (forward * clamped.y + right * clamped.x).normalized * clamped.magnitude;
+            return (forward * moveInput.y + right * moveInput.x).normalized;
         }
 
         private static Vector3 Flatten(Vector3 vector)
@@ -61,7 +65,7 @@ namespace PlagueHunter.Player
 
         private void Rotate(Vector3 direction, float deltaTime)
         {
-            if (direction.sqrMagnitude < 0.0001f)
+            if (direction.sqrMagnitude < InputDeadZone)
                 return;
 
             Quaternion target = Quaternion.LookRotation(direction);

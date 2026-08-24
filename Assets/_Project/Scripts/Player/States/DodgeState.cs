@@ -25,7 +25,10 @@ namespace PlagueHunter.Player
             _player.Animator.SetFloat(PlayerRoot.SpeedHash, 0f);
 
             _player.transform.rotation = Quaternion.LookRotation(GetDodgeDirection());
-            _player.Animator.CrossFade(_data.StateHash, _data.CrossFade, 0, 0f);
+
+            // Play вместо CrossFade: при смешивании deltaPosition берётся с весом клипа,
+            // и первые кадры рывка — самые быстрые — теряются.
+            _player.Animator.Play(_data.StateHash, 0, 0f);
         }
 
         public void Tick(float deltaTime)
@@ -48,11 +51,7 @@ namespace PlagueHunter.Player
                 return;
             }
 
-            bool hasMoveInput = _player.Input.Move.sqrMagnitude > 0.01f;
-
-            // После CancelTime ввод движения обрывает хвост анимации.
-            // Без этого управление возвращается только на Duration и додж ощущается вязким.
-            if (hasMoveInput)
+            if (_player.Input.Move.sqrMagnitude > 0.01f)
             {
                 _player.Machine.SetState(_player.Move);
                 return;
