@@ -1,4 +1,5 @@
 using System;
+using PlagueHunter.Enemy;
 using PlagueHunter.Player;
 using UnityEngine;
 
@@ -23,7 +24,24 @@ namespace PlagueHunter.Core
             _player.Compose(input, Camera.main);
             _player.Death.Finished += OnDeathAnimationFinished;
 
-            Debug.Log("[GameplayRoot] Composed");
+            int enemies = ComposeEnemies();
+
+            Debug.Log($"[GameplayRoot] Composed, врагов в сцене: {enemies}");
+        }
+
+        /// <summary>
+        /// Врагов ищем по сцене, а не тянем ссылками в инспекторе:
+        /// их количество меняется от прогона к прогону, а забытая ссылка
+        /// дала бы молча стоящего болвана вместо ошибки.
+        /// </summary>
+        private int ComposeEnemies()
+        {
+            EnemyRoot[] enemies = FindObjectsByType<EnemyRoot>(FindObjectsSortMode.None);
+
+            foreach (EnemyRoot enemy in enemies)
+                enemy.Compose(_player.transform);
+
+            return enemies.Length;
         }
 
         private void OnDeathAnimationFinished()
