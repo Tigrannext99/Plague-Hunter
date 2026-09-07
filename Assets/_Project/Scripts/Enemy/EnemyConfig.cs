@@ -21,6 +21,10 @@ namespace PlagueHunter.Enemy
         [Tooltip("Дистанция, на которой враг теряет уже замеченную цель")]
         [SerializeField] private float _deaggroRadius = 14f;
 
+        [Header("Stagger")]
+        [Tooltip("Сколько враг стоит в реакции на удар, прежде чем вернуться в бой")]
+        [SerializeField] private float _hitStun = 0.4f;
+
         [Header("Targets")]
         [SerializeField] private LayerMask _targetMask;
 
@@ -30,11 +34,13 @@ namespace PlagueHunter.Enemy
         public float GroundedGravity => _groundedGravity;
         public float AggroRadius => _aggroRadius;
         public float DeaggroRadius => _deaggroRadius;
+        public float HitStun => _hitStun;
         public LayerMask TargetMask => _targetMask;
 
         private void OnValidate()
         {
             _moveSpeed = Mathf.Max(_moveSpeed, 0f);
+            _hitStun = Mathf.Max(_hitStun, 0f);
             _aggroRadius = Mathf.Max(_aggroRadius, 0f);
 
             // Гистерезис: терять цель нужно дальше, чем замечать,
