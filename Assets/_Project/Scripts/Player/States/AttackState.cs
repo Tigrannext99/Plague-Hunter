@@ -11,7 +11,7 @@ namespace PlagueHunter.Player
         private readonly Collider[] _overlaps = new Collider[16];
         private readonly HashSet<IDamageable> _alreadyHit = new HashSet<IDamageable>();
 
-        private AttackData _current;
+        private PlayerAttackData _current;
         private int _index;
         private float _timer;
 
@@ -74,7 +74,7 @@ namespace PlagueHunter.Player
         private bool HasUsableCombo()
             => _player.Combo != null && _player.Combo.Length > 0 && _player.Combo[0] != null;
 
-        private void StartAttack(AttackData attack)
+        private void StartAttack(PlayerAttackData attack)
         {
             _current = attack;
             _timer = 0f;

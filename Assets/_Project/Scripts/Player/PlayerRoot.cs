@@ -122,7 +122,7 @@ namespace PlagueHunter.Player
 
             for (int i = 0; i < _combo.Length; i++)
             {
-                AttackData attack = _combo[i];
+                PlayerAttackData attack = _combo[i];
 
                 if (attack == null)
                 {

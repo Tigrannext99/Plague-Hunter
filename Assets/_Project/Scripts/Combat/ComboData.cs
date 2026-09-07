@@ -5,10 +5,10 @@ namespace PlagueHunter.Combat
     [CreateAssetMenu(menuName = "PlagueHunter/Combo Data")]
     public sealed class ComboData : ScriptableObject
     {
-        [SerializeField] private AttackData[] _attacks;
+        [SerializeField] private PlayerAttackData[] _attacks;
 
         public int Length => _attacks?.Length ?? 0;
-        public AttackData this[int index] => _attacks[index];
+        public PlayerAttackData this[int index] => _attacks[index];
 
 #if UNITY_EDITOR
         private void OnValidate()
