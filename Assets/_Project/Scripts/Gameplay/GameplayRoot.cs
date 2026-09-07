@@ -1,5 +1,6 @@
 using System;
 using PlagueHunter.Enemy;
+using PlagueHunter.Gameplay;
 using PlagueHunter.Player;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace PlagueHunter.Core
     public sealed class GameplayRoot : MonoBehaviour
     {
         [SerializeField] private PlayerRoot _player;
+        [Tooltip("Необязательный: тестовая арена, подсыпающая врагов")]
+        [SerializeField] private EnemySpawner _spawner;
         [SerializeField] private float _restartDelay = 2.5f;
 
         private GameplayInputReader _input;
@@ -25,6 +28,9 @@ namespace PlagueHunter.Core
             _player.Death.Finished += OnDeathAnimationFinished;
 
             int enemies = ComposeEnemies();
+
+            if (_spawner != null)
+                _spawner.Compose(_player.transform);
 
             Debug.Log($"[GameplayRoot] Composed, врагов в сцене: {enemies}");
         }
