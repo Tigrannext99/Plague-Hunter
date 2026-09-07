@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlagueHunter.Combat.EnemyAttackData
   _stateName: Attack_1
   _duration: 2.583
-  _hitStart: 0.25
-  _hitEnd: 0.35
+  _hitStart: 0.7
+  _hitEnd: 1.2
   _damage: 25
   _range: 1.8
   _reach: 1.6
   _hitRadius: 1.8
   _cooldown: 1.5
-  _showTelegraph
+  _showTelegraph: 1

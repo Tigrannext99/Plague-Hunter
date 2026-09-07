@@ -16,5 +16,5 @@ MonoBehaviour:
   _duration: 1
   _crossFade: 0.2
   _iFramesStart: 0.05
-  _iFramesEnd: 0.05
+  _iFramesEnd: 0.5
   _cancelTime: 0.7

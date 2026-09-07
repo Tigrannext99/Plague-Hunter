@@ -132,8 +132,16 @@ namespace PlagueHunter.Enemy
 
         private void OnDied() => _machine.SetState(Death);
 
-        /// <summary>Труп не должен толкать игрока и ловить удары — выключаем контроллер.</summary>
-        private void OnDeathFinished() => _controller.enabled = false;
+        /// <summary>
+        /// Труп не должен толкать игрока и ловить удары — выключаем контроллер.
+        /// Вместе с ним гасим root motion: из Death стейт не выходит и флаг
+        /// остался бы включённым, а Move на выключенном контроллере ругается.
+        /// </summary>
+        private void OnDeathFinished()
+        {
+            UseRootMotion = false;
+            _controller.enabled = false;
+        }
 
         private void Update() => _machine.Tick(Time.deltaTime);
 
